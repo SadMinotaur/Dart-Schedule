@@ -12,9 +12,7 @@ dependencies:
   path_provider: ^0.4.1
   intl: ^0.15.7
   intl_translation: ^0.17.0
-#  firebase_database: ^3.0.7
-  firebase_storage: ^3.0.6
-
+  
   flutter:
     sdk: flutter
 

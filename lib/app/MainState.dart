@@ -99,6 +99,7 @@ class MainState extends State<MyApp> {
                 Navigator.push(context, ScaleRoute(page: Settings()));
               }),
           title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(_lessons._date),
               Text(_lessons._week),

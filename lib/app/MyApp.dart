@@ -1,6 +1,7 @@
 library app;
 
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:schedule/ScaleRoute.dart';
@@ -9,18 +10,12 @@ import 'package:sqflite/sqflite.dart';
 import 'dart:io';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-//import 'package:firebase_storage/firebase_storage.dart';
 
 part 'Cards.dart';
-
 part 'Data.dart';
-
 part 'MainState.dart';
-
 part 'AddLe.dart';
-
 part 'Settings.dart';
-
 part 'Colors.dart';
 
 var _lessons = Data();

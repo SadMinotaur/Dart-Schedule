@@ -20,10 +20,19 @@ class Cards extends StatelessWidget {
             children: <Widget>[
               Padding(padding: EdgeInsets.only(top: 10.0)),
               ListTile(
+                leading: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    _lessons._list[i][3]
+                  ],
+                ),
+                trailing: _lessons._list[i][0],
+                title: _lessons._list[i][1],
+                subtitle: _lessons._list[i][2],
                 onLongPress: () {
                   showMenu(
                       position:
-                          RelativeRect.fromLTRB(120.0, 20.0, 100.0, 100.0),
+                      RelativeRect.fromLTRB(120.0, 20.0, 100.0, 100.0),
                       context: context,
                       items: <PopupMenuEntry>[
                         PopupMenuItem(
@@ -46,10 +55,6 @@ class Cards extends StatelessWidget {
                         )
                       ]);
                 },
-                leading: _lessons._list[i][3],
-                trailing: _lessons._list[i][0],
-                title: _lessons._list[i][1],
-                subtitle: _lessons._list[i][2],
               ),
               Padding(padding: EdgeInsets.only(bottom: 10.0)),
             ],

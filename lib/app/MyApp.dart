@@ -12,10 +12,15 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'Cards.dart';
+
 part 'Data.dart';
+
 part 'MainState.dart';
+
 part 'AddLe.dart';
+
 part 'Settings.dart';
+
 part 'Colors.dart';
 
 var _lessons = Data();

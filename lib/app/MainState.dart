@@ -1,6 +1,16 @@
 part of app;
 
+//Keys from back4app
+const String PARSE_APP_ID = '';
+const String PARSE_APP_URL = '';
+const String MASTER_KEY = '';
+
 class MainState extends State<MyApp> {
+  void initParse() async {
+    await Parse().initialize(PARSE_APP_ID, PARSE_APP_URL,
+        masterKey: MASTER_KEY, autoSendSessionId: true);
+  }
+
   void curDate() async {
     readTheme().then((value) {
       if (_theme != value) {
@@ -51,10 +61,23 @@ class MainState extends State<MyApp> {
     }
   }
 
-  @override
-  void initState() {
-    curDate();
-    super.initState();
+  void sync(GlobalKey<ScaffoldState> state) async {
+    var apiResponse = await ParseObject('schedule').getAll();
+    if (apiResponse.success && apiResponse.result != null) {
+      _db.rawDelete("DELETE FROM lessons");
+      Map<String, dynamic> map;
+      for (var lesson in apiResponse.result) {
+        map = jsonDecode(lesson.toString());
+        _db.rawInsert(
+            "INSERT INTO lessons (num,day,week,name,teacher,place,type)"
+            " VALUES (${map["num"]},${map["day"]},${map["weekEven"] ? 0 : 1},"
+            "'${map["name"]}','${map["teacher"]}','${map["place"]}','${map["type"]}')");
+      }
+      move();
+    } else {
+      final snackBar = SnackBar(content: Text('Ошибка синхронизации'));
+      state.currentState.showSnackBar(snackBar);
+    }
   }
 
   void move() {
@@ -74,12 +97,24 @@ class MainState extends State<MyApp> {
   }
 
   @override
+  void initState() {
+    initParse();
+    curDate();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: _colors.set[1],
-      key: GlobalKey<ScaffoldState>(),
+      key: _key,
       appBar: AppBar(
           actions: <Widget>[
+            IconButton(
+                icon: Icon(Icons.cloud_download),
+                onPressed: () {
+                  sync(_key);
+                }),
             ret(
                     IconButton(
                         onPressed: () async {

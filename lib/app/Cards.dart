@@ -40,7 +40,8 @@ class Cards extends StatelessWidget {
                             children: <Widget>[
                               IconButton(
                                 icon: Icon(Icons.delete),
-                                onPressed: () {
+                                onPressed: () async {
+                                  ParseObject('schedule').delete(id: "QjHUO5QH9v");
                                   _db.rawDelete("DELETE FROM lessons "
                                       "WHERE lessons.num = $i "
                                       "AND lessons.day = ${_cur.weekday} "

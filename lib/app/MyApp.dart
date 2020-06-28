@@ -1,6 +1,7 @@
 library app;
 
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,6 +11,7 @@ import 'package:sqflite/sqflite.dart';
 import 'dart:io';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:parse_server_sdk/parse_server_sdk.dart';
 
 part 'Cards.dart';
 
@@ -30,6 +32,7 @@ DateTime _cur;
 Database _db;
 bool _layout;
 bool _theme = true;
+GlobalKey<ScaffoldState> _key = new GlobalKey();
 
 Future<bool> readLayout() async {
   final prefs = await SharedPreferences.getInstance();

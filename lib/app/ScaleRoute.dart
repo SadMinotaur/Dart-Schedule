@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+part of app;
 
 class ScaleRoute extends PageRouteBuilder {
   final Widget page;

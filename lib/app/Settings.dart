@@ -16,7 +16,7 @@ class SettingsC extends State<Settings> {
   void changeTheme(bool value) {
     setState(() {
       _theme = value;
-      _colors._switch();
+      _colors.switchTheme();
       saveTheme(value);
     });
   }
@@ -41,17 +41,6 @@ class SettingsC extends State<Settings> {
                   value: _theme,
                   onChanged: changeTheme,
                   title: Text('Темная тема', style: _colors.currentStyle)),
-              Text('Расписание', style: _colors.currentStyle),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text('1 пара: 8:00 - 9:35', style: _colors.currentStyle),
-                  Text('2 пара: 9:45 - 11:20', style: _colors.currentStyle),
-                  Text('3 пара: 11:30 - 13:05', style: _colors.currentStyle),
-                  Text('4 пара: 13:55 - 15:30', style: _colors.currentStyle),
-                  Text('5 пара: 15:40 - 17:15', style: _colors.currentStyle)
-                ],
-              )
             ])));
   }
 }

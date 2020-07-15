@@ -15,7 +15,7 @@ class ColorsData {
   static final lightStyleTex = TextStyle(color: Colors.black, fontSize: 20);
   static final darkStyleTex = TextStyle(color: Colors.white, fontSize: 20);
 
-  void _switch() {
+  void switchTheme() {
     if (_theme) {
       currentStyle = darkStyleTex;
       set = [darkFirstColor, darkSecondColor, darkThirdColor];

@@ -5,7 +5,6 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:schedule/ScaleRoute.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:io';
@@ -13,24 +12,32 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 
-part 'Cards.dart';
+part 'app/ScaleRoute.dart';
 
-part 'Data.dart';
+part 'app/Cards.dart';
 
-part 'MainState.dart';
+part 'data/Data.dart';
 
-part 'AddLe.dart';
+part 'app/MainState.dart';
 
-part 'Settings.dart';
+part 'app/AddLe.dart';
 
-part 'Colors.dart';
+part 'app/Settings.dart';
 
-var _lessons = Data();
-var _colors = ColorsData();
+part 'data/Colors.dart';
 
+part 'data/Schedule.dart';
+
+//Keys from back4app
+const String PARSE_APP_ID = '';
+const String PARSE_APP_URL = '';
+const String MASTER_KEY = '';
+Data _lessons = Data();
+ColorsData _colors = ColorsData();
 DateTime _cur;
 Database _db;
 bool _layout;
+String _group;
 bool _theme = true;
 GlobalKey<ScaffoldState> _key = new GlobalKey();
 
@@ -46,14 +53,25 @@ Future<bool> readTheme() async {
   return value;
 }
 
-void saveLayout(bool get) async {
+Future<String> readGroup() async {
   final prefs = await SharedPreferences.getInstance();
-  prefs.setBool("layout", get);
+  final value = prefs.getString("group");
+  return value;
 }
 
-void saveTheme(bool get) async {
+void saveLayout(bool set) async {
   final prefs = await SharedPreferences.getInstance();
-  prefs.setBool("theme", get);
+  prefs.setBool("layout", set);
+}
+
+void saveTheme(bool set) async {
+  final prefs = await SharedPreferences.getInstance();
+  prefs.setBool("theme", set);
+}
+
+void saveGroup(String set) async {
+  final prefs = await SharedPreferences.getInstance();
+  prefs.setString("group", set);
 }
 
 int weekNumber(DateTime date) {
@@ -78,5 +96,11 @@ Future load() async {
 
 class MyApp extends StatefulWidget {
   @override
-  MainState createState() => MainState();
+  MainState createState() {
+    return MainState();
+  }
+}
+
+void main() {
+  runApp(MaterialApp(home: MyApp()));
 }

@@ -1,22 +1,13 @@
 part of app;
 
-//Keys from back4app
-const String PARSE_APP_ID = '';
-const String PARSE_APP_URL = '';
-const String MASTER_KEY = '';
-
 class MainState extends State<MyApp> {
-  void initParse() async {
-    await Parse().initialize(PARSE_APP_ID, PARSE_APP_URL,
-        masterKey: MASTER_KEY, autoSendSessionId: true);
-  }
-
   void curDate() async {
     readTheme().then((value) {
-      if (_theme != value) {
-        _theme = value;
-        _colors._switch();
-      }
+      _theme = value;
+      _colors.switchTheme();
+    });
+    readGroup().then((value) {
+      _group = value;
     });
     if (_db == null) await load();
     _cur = DateTime.now().add(Duration(days: _lessons._carriage));
@@ -56,22 +47,55 @@ class MainState extends State<MyApp> {
           }
         });
       }
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
   }
 
   void sync(GlobalKey<ScaffoldState> state) async {
-    var apiResponse = await ParseObject('schedule').getAll();
+    if (_group == null) {
+      var groups = await ParseObject('group').getAll();
+      final List<Widget> list = new List<Widget>();
+      list.add(new Text("Выбор группы",
+          textAlign: TextAlign.center, style: _colors.currentStyle));
+      if (groups.success) {
+        Map<String, dynamic> map;
+        for (var group in groups.result) {
+          map = jsonDecode(group.toString());
+          list.add(Card(
+              color: _colors.set[2],
+              child: new Text(
+                map["name"],
+                style: _colors.currentStyle,
+                textAlign: TextAlign.center,
+              )));
+        }
+      }
+      await showDialog(
+          context: _key.currentContext,
+          builder: (BuildContext context) {
+            return AlertDialog(
+                backgroundColor: _colors.set[0],
+                scrollable: true,
+                content: new Container(
+                    width: 300,
+                    height: 300,
+                    padding: EdgeInsets.only(bottom: 10.0),
+                    child: ListView(
+                      children: list,
+                    )));
+          });
+    }
+    var query = QueryBuilder<ScheduleParse>(ScheduleParse())
+      ..whereContains(ScheduleParse.group, _group, caseSensitive: false);
+    var apiResponse = await query.query();
     if (apiResponse.success && apiResponse.result != null) {
       _db.rawDelete("DELETE FROM lessons");
       Map<String, dynamic> map;
       for (var lesson in apiResponse.result) {
         map = jsonDecode(lesson.toString());
         _db.rawInsert(
-            "INSERT INTO lessons (num,day,week,name,teacher,place,type)"
+            "INSERT INTO lessons (num,day,week,name,teacher,place,type, objectId)"
             " VALUES (${map["num"]},${map["day"]},${map["weekEven"] ? 0 : 1},"
-            "'${map["name"]}','${map["teacher"]}','${map["place"]}','${map["type"]}')");
+            "'${map["name"]}','${map["teacher"]}','${map["place"]}','${map["type"]}','${map["objectId"]}')");
       }
       move();
     } else {
@@ -80,20 +104,20 @@ class MainState extends State<MyApp> {
     }
   }
 
-  void move() {
-    _lessons.clean();
-    curDate();
-  }
-
-  dynamic ret(r, BuildContext context, bool boo) {
+  dynamic ret(r, BuildContext context, bool bool) {
     if (_layout == null)
       readLayout().then((a) {
         _layout = a;
-        if (_layout == boo) return r;
+        if (_layout == bool) return r;
         return null;
       });
-    if (_layout == boo) return r;
+    if (_layout == bool) return r;
     return null;
+  }
+
+  void initParse() async {
+    await Parse().initialize(PARSE_APP_ID, PARSE_APP_URL,
+        masterKey: MASTER_KEY, autoSendSessionId: true, debug: true);
   }
 
   @override
@@ -101,6 +125,11 @@ class MainState extends State<MyApp> {
     initParse();
     curDate();
     super.initState();
+  }
+
+  void move() {
+    _lessons.clean();
+    curDate();
   }
 
   @override

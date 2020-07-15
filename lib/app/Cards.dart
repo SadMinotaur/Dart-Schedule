@@ -1,19 +1,17 @@
 part of app;
 
 class Cards extends StatelessWidget {
-  final List<Widget> _list = List();
-  MainState stateM;
+  final List<Widget> list = List();
+  MainState state;
 
   Cards(MainState state) {
-    stateM = state;
+    this.state = state;
   }
-
-  final _key = Key("");
 
   @override
   Widget build(BuildContext context) {
     for (var i = 0; i < 5; i++)
-      _list.add(
+      list.add(
         Card(
           color: _colors.set[2],
           child: Column(
@@ -35,18 +33,24 @@ class Cards extends StatelessWidget {
                       items: <PopupMenuEntry>[
                         PopupMenuItem(
                           value: 1,
-                          key: _key,
+                          key: new Key(""),
                           child: Row(
                             children: <Widget>[
                               IconButton(
                                 icon: Icon(Icons.delete),
                                 onPressed: () async {
-                                  ParseObject('schedule').delete(id: "QjHUO5QH9v");
-                                  _db.rawDelete("DELETE FROM lessons "
+                                  var deleteId = await _db.rawQuery(
+                                      "SELECT objectId FROM lessons "
                                       "WHERE lessons.num = $i "
                                       "AND lessons.day = ${_cur.weekday} "
                                       "AND lessons.week = ${weekNumber(_cur) % 2}");
-                                  stateM.move();
+                                  ParseObject('schedule')
+                                      .delete(id: deleteId.first["objectId"]);
+                                  await _db.rawDelete("DELETE FROM lessons "
+                                      "WHERE lessons.num = $i "
+                                      "AND lessons.day = ${_cur.weekday} "
+                                      "AND lessons.week = ${weekNumber(_cur) % 2}");
+                                  state.move();
                                 },
                               ),
                             ],
@@ -60,6 +64,6 @@ class Cards extends StatelessWidget {
           ),
         ),
       );
-    return ListView(padding: const EdgeInsets.all(8.0), children: _list);
+    return ListView(padding: const EdgeInsets.all(8.0), children: list);
   }
 }

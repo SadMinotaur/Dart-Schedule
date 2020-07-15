@@ -9,7 +9,6 @@ environment:
 dependencies:
   shared_preferences: ^0.5.3+2
   sqflite: ^1.0.0
-#  path_provider: ^0.4.1
   intl: ^0.15.7
   intl_translation: ^0.17.0
   flutter_bloc: ^0.20.1

@@ -1,7 +1,7 @@
 part of app;
 
 class Data {
-  final _days = [
+  final days = [
     "Понедельник",
     "Вторник",
     "Среда",
@@ -11,11 +11,11 @@ class Data {
     "Воскресенье"
   ];
 
-  var _date = "";
-  var _week = "";
-  var _carriage = 0;
+  var date = "";
+  var week = "";
+  var carriage = 0;
 
-  List _list = [
+  List list = [
     [Text(""), Text(""), Text(""), Text("")],
     [Text(""), Text(""), Text(""), Text("")],
     [Text(""), Text(""), Text(""), Text("")],
@@ -24,12 +24,12 @@ class Data {
   ];
 
   void cleanOne(int i) {
-    for (var b = 0; b < _list[i].length; b++) _list[i][b] = Text("");
+    for (var b = 0; b < list[i].length; b++) list[i][b] = Text("");
   }
 
   void clean() {
-    for (var i = 0; i < _list.length; i++) {
-      for (var b = 0; b < _list[0].length; b++) _list[i][b] = Text("");
+    for (var i = 0; i < list.length; i++) {
+      for (var b = 0; b < list[0].length; b++) list[i][b] = Text("");
     }
   }
 }

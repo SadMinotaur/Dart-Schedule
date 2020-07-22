@@ -1,16 +1,9 @@
 part of app;
 
-class AddLe extends StatelessWidget {
-  MainState state;
-
-  AddLe(MainState state) {
-    this.state = state;
-  }
+class AddLesson extends StatelessWidget {
 
   final List<Widget> _list = List();
-
-  var values = ["", "", "", "", ""];
-
+  final values = ["", "", "", "", ""];
   final List name = ["Номер", "Занятие", "Преподаватель", "Аудитория", "Тип"];
 
   @override

@@ -7,6 +7,7 @@ class ScheduleParse extends ParseObject implements ParseCloneable {
 
   static const String table = 'schedule';
   static const String group = 'group';
+  static const String university = 'university';
 
   @override
   clone(Map map) => ScheduleParse.clone()..fromJson(map);

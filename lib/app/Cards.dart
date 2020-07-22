@@ -20,11 +20,11 @@ class Cards extends StatelessWidget {
               ListTile(
                 leading: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[_lessons._list[i][3]],
+                  children: <Widget>[_lessons.list[i][3]],
                 ),
-                trailing: _lessons._list[i][0],
-                title: _lessons._list[i][1],
-                subtitle: _lessons._list[i][2],
+                trailing: _lessons.list[i][0],
+                title: _lessons.list[i][1],
+                subtitle: _lessons.list[i][2],
                 onLongPress: () {
                   showMenu(
                       position:

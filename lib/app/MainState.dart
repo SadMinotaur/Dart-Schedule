@@ -45,24 +45,24 @@ class MainState extends State<MyApp> {
         });
       }
     } catch (e) {}
-//    readGroup().then((value) {
-//      _group = value;
-//    });
-//    readUniversity().then((value) {
-//      _university = value;
-//    });
+    readGroup().then((value) {
+      _group = value;
+    });
+    readUniversity().then((value) {
+      _university = value;
+    });
   }
 
   void sync(GlobalKey<ScaffoldState> state) async {
     if (_group == null || _university == null) {
-      await Navigator.push(
-          state.currentContext, ScaleRoute(page: ChooseState(await getUniversity())));
+      await Navigator.push(state.currentContext,
+          ScaleRoute(page: ChooseState(await getUniversity())));
     }
     if (_group == null || _university == null) {
       return;
     }
     var apiResponse = await getSchedule();
-    if (apiResponse.success && apiResponse.result != null) {
+    if (apiResponse.result != null) {
       _db.rawDelete("DELETE FROM lessons");
       Map<String, dynamic> map;
       for (var lesson in apiResponse.result) {
@@ -74,7 +74,7 @@ class MainState extends State<MyApp> {
       }
       move();
     } else {
-      final snackBar = SnackBar(content: Text('Ошибка синхронизации'));
+      final snackBar = SnackBar(content: Text('Пустое расписание'));
       state.currentState.showSnackBar(snackBar);
     }
   }
@@ -107,7 +107,7 @@ class MainState extends State<MyApp> {
                     IconButton(
                         onPressed: () async {
                           Navigator.push(
-                              context, ScaleRoute(page: AddLesson()));
+                              context, ScaleRoute(page: AddLesson(this)));
                         },
                         icon: Icon(Icons.add_circle)),
                     context,
@@ -119,7 +119,7 @@ class MainState extends State<MyApp> {
           leading: IconButton(
               icon: Icon(Icons.settings),
               onPressed: () async {
-                Navigator.push(context, ScaleRoute(page: Settings()));
+                Navigator.push(context, ScaleRoute(page: Settings(this)));
               }),
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,7 +134,7 @@ class MainState extends State<MyApp> {
             backgroundColor: Colors.cyan,
             child: Icon(Icons.add),
             onPressed: () async {
-              Navigator.push(context, ScaleRoute(page: AddLesson()));
+              Navigator.push(context, ScaleRoute(page: AddLesson(this)));
             },
           ),
           context,

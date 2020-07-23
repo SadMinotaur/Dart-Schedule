@@ -21,7 +21,7 @@ part 'data/Data.dart';
 
 part 'app/MainState.dart';
 
-part 'app/AddLe.dart';
+part 'app/AddLesson.dart';
 
 part 'app/Settings.dart';
 

@@ -1,5 +1,6 @@
 part of app;
 
+// ignore: must_be_immutable
 class Cards extends StatelessWidget {
   final List<Widget> list = List();
   MainState state;

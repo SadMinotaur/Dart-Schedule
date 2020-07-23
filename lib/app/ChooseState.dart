@@ -12,6 +12,7 @@ class ChooseState extends StatefulWidget {
 class Choose extends State<ChooseState> {
   final ParseResponse universities;
   final Map<String, bool> widgets = new HashMap();
+  String textField;
   Color colorTapped = _colors.set[2];
 
   Choose(this.universities);
@@ -31,6 +32,58 @@ class Choose extends State<ChooseState> {
   Widget build(BuildContext context) {
     List<String> keys = widgets.keys.toList(growable: false);
     return Scaffold(
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          backgroundColor: _colors.set[2],
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  backgroundColor: _colors.set[1],
+                  contentTextStyle: _colors.currentStyle,
+                  title: new Text(
+                    "Введите ВУЗ/группу",
+                    style: _colors.currentStyle,
+                  ),
+                  content: TextField(
+                    style: _colors.currentStyle,
+                    textAlign: TextAlign.center,
+                    onChanged: (value) => textField = value,
+                  ),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text("Добавить"),
+                      onPressed: () async {
+                        if (_university != null) {
+                          var addObj = ParseObject('group')
+                            ..set('name', textField)
+                            ..set('university', _university);
+                          var request = await addObj.save();
+                          if (request.success) {
+                            setState(() {
+                              widgets[textField] = false;
+                            });
+                          }
+                        } else {
+                          var addObj = ParseObject('university')
+                            ..set('name', textField);
+                          var request = await addObj.save();
+                          if (request.success) {
+                            setState(() {
+                              widgets[textField] = true;
+                            });
+                          }
+                        }
+                        Navigator.pop(context);
+                      },
+                    )
+                  ],
+                );
+              },
+            );
+          },
+        ),
         backgroundColor: _colors.set[1],
         appBar: AppBar(
           backgroundColor: _colors.set[0],

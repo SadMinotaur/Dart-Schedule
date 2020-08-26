@@ -53,9 +53,9 @@ class MainState extends State<MyApp> {
     });
   }
 
-  void sync(GlobalKey<ScaffoldState> state) async {
+  void sync() async {
     if (_group == null || _university == null) {
-      await Navigator.push(state.currentContext,
+      await Navigator.push(_key.currentContext,
           ScaleRoute(page: ChooseState(await getUniversity())));
     }
     if (_group == null || _university == null) {
@@ -75,15 +75,15 @@ class MainState extends State<MyApp> {
       move();
     } else {
       final snackBar = SnackBar(content: Text('Пустое расписание'));
-      state.currentState.showSnackBar(snackBar);
+      _key.currentState.showSnackBar(snackBar);
     }
   }
 
   @override
   void initState() {
+    super.initState();
     initParse();
     curDate();
-    super.initState();
   }
 
   void move() {
@@ -101,7 +101,7 @@ class MainState extends State<MyApp> {
             IconButton(
                 icon: Icon(Icons.cloud_download),
                 onPressed: () {
-                  sync(_key);
+                  sync();
                 }),
             ret(
                     IconButton(

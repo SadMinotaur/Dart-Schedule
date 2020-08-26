@@ -48,6 +48,7 @@ String _group;
 String _university;
 bool _theme = true;
 GlobalKey<ScaffoldState> _key = new GlobalKey();
+
 class MyApp extends StatefulWidget {
   @override
   MainState createState() => MainState();

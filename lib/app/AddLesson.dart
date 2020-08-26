@@ -79,7 +79,7 @@ class AddLesson extends StatelessWidget {
                 ..set('group', _group)
                 ..set('university', _university);
               await addObj.save();
-              state.sync(_key);
+              state.sync();
               Navigator.pop(context, ScaleRoute());
             }
           } catch (_) {}

@@ -70,7 +70,7 @@ class SettingsC extends State<Settings> {
                           saveUniversity(null);
                           _group = null;
                           saveGroup(null);
-                          state.sync(_key);
+                          state.sync();
                         }),
                   ],
                 ))

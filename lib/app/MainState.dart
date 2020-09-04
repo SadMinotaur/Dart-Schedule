@@ -2,6 +2,7 @@ part of app;
 
 class MainState extends State<MyApp> {
   void curDate() async {
+    _isChangedWeek = (await readWeekChange()) ? true : false;
     readTheme().then((value) {
       _theme = value;
       _colors.switchTheme();
@@ -11,7 +12,7 @@ class MainState extends State<MyApp> {
     int week;
     var thisWeek = "";
     var date = "${_lessons.days[_cur.weekday - 1]} ${_cur.day}.${_cur.month} ";
-    if (weekNumber(_cur) % 2 == 0) {
+    if ((weekNumber(_cur) + (_isChangedWeek ? 1 : 0)) % 2 == 0) {
       thisWeek = "Четная неделя";
       week = 0;
     } else {

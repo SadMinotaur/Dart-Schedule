@@ -20,6 +20,16 @@ Future<String> readUniversity() async {
   return prefs.getString("university");
 }
 
+Future<bool> readWeekChange() async {
+  final prefs = await SharedPreferences.getInstance();
+  return prefs.getBool("weekChange");
+}
+
+void saveWeekChange(bool set) async {
+  final prefs = await SharedPreferences.getInstance();
+  prefs.setBool("weekChange", set);
+}
+
 void saveLayout(bool set) async {
   final prefs = await SharedPreferences.getInstance();
   prefs.setBool("layout", set);

@@ -30,6 +30,13 @@ class SettingsC extends State<Settings> {
     });
   }
 
+  void changeWeek(bool value) {
+    setState(() {
+      _isChangedWeek = !_isChangedWeek;
+    });
+    saveWeekChange(_isChangedWeek);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,6 +57,11 @@ class SettingsC extends State<Settings> {
                 value: _theme,
                 onChanged: changeTheme,
                 title: Text('Темная тема', style: _colors.currentStyle)),
+            SwitchListTile(
+                value: _isChangedWeek,
+                onChanged: changeWeek,
+                title: Text('Сменить порядок недели',
+                    style: _colors.currentStyle)),
             Container(
                 padding: EdgeInsets.only(left: 17),
                 child: Row(

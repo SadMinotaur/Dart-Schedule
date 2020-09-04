@@ -2,7 +2,7 @@ part of app;
 
 class MainState extends State<MyApp> {
   void curDate() async {
-    _isChangedWeek = (await readWeekChange()) ? true : false;
+    _isChangedWeek = (await readWeekChange() == true) ? true : false;
     readTheme().then((value) {
       _theme = value;
       _colors.switchTheme();

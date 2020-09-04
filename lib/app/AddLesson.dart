@@ -71,7 +71,7 @@ class AddLesson extends StatelessWidget {
               var addObj = ParseObject('schedule')
                 ..set('num', int.parse(values[0]) - 1)
                 ..set('day', _cur.weekday)
-                ..set('weekEven', weekNumber(_cur) % 2 == 0 ? true : false)
+                ..set('weekEven', (weekNumber(_cur) + (_isChangedWeek ? 1 : 0)) % 2 == 0 ? true : false)
                 ..set('name', values[1])
                 ..set('teacher', values[2])
                 ..set('place', values[3])

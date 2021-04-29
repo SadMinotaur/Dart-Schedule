@@ -36,9 +36,9 @@ part 'data/GroupParse.dart';
 part 'app/ChooseState.dart';
 
 //Keys from back4app
-const String PARSE_APP_ID = '';
-const String PARSE_APP_URL = '';
-const String MASTER_KEY = '';
+const String PARSE_APP_ID = 'TmOSA86376clw7ZRIl5YSuSQbrh6Ty5JjZbFxCLP';
+const String PARSE_APP_URL = 'https://parseapi.back4app.com/';
+const String MASTER_KEY = 'LPNoqEM5aOXT08a0wjzQJogi1lvJJvv0SXpXEuxX';
 Data _lessons = Data();
 ColorsData _colors = ColorsData();
 DateTime _cur;
